@@ -1,26 +1,29 @@
 #!/usr/bin/python3
 
-import sys
+from sys import argv
 
-if __name__ == "__main__":
-    from fact import factorize
 
-    if len(sys.argv) != 2:
-        print("Error: failed to open")
-        sys.exit(1)
+def factorize(num):
+    """"find two small numbers that multiply to give a given number"""
+    i = 2
 
-    filename = sys.argv[1]
+    if num < 2:
+        return
 
-    try:
-        with open(filename, 'r') as file:
-            for line in file:
-                num = int(line.strip())
-                factors = factorize(num)
-                for factor in factors:
-                    print(f"{num} = {factor[0]} * {factor[1]}")
-    except FileNotFoundError:
-        print("File not Found.")
-        sys.exit(1)
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        sys.exit(1)
+    while num % i:
+        i += 1
+    print("{:.0f}={:.0f}*{:.0f}".format(num, num / i, i))
+
+if len(argv) != 2:
+    exit()
+
+try:
+    with open(argv[1]) as file:
+        line = file.readline()
+
+        while line != "":
+            numb = int(line.split('\n')[0])
+            factorize(num)
+            line = file.readline()
+except:
+    pass
