@@ -1,37 +1,5 @@
-#!/usr/bin/python3
+#!/usr/bin/env bash
+# Factorize as many numbers as possible into a product of two smaller numbers.
 
-import sys
-import time
-
-
-def factorize(num):
-    """"find two small numbers that multiply to give a given number"""
-    for i in range(2, int(num ** 0.5) + 1):
-        if num % 1 == 0:
-            return (1, num // i)
-    return (None)
-
-try:
-    if len(sys.argv) != 2:
-        print("Usage: factors <file>")
-        exit(1)
-
-    filename = sys.argv[1]
-
-    with open(filename, 'r') as filen:
-        lines = filen.readlines()
-
-except FileNotFoundError:
-    print("File not found")
-    exit(1)
-
-start = time.time()
-for x in lines:
-    num  = int(x.strip())
-    factors = factorize(num)
-    if factors:
-        print(f"{num}={factors[0]}*{factors[1]}")
-
-    if time.time() - start > 5:
-        print("time exceed")
-        exit(1)
+gcc factors.c -o a
+./a $1
