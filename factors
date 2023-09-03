@@ -1,29 +1,37 @@
 #!/usr/bin/python3
 
-from sys import argv
+import sys
+import time
 
 
 def factorize(num):
     """"find two small numbers that multiply to give a given number"""
-    i = 2
-
-    if num < 2:
-        return
-
-    while num % i:
-        i += 1
-    print("{:.0f}={:.0f}*{:.0f}".format(num, num / i, i))
-
-if len(argv) != 2:
-    exit()
+    for i in range(2, int(num ** 0.5) + 1):
+        if num % 1 == 0:
+            return (1, num // i)
+    return (None)
 
 try:
-    with open(argv[1]) as file:
-        line = file.readline()
+    if len(sys.argv) != 2:
+        print("Usage: factors <file>")
+        exit(1)
 
-        while line != "":
-            numb = int(line.split('\n')[0])
-            factorize(num)
-            line = file.readline()
-except:
-    pass
+    filename = sys.argv[1]
+
+    with open(filename, 'r') as filen:
+        lines = filen.readlines()
+
+except FileNotFoundError:
+    print("File not found")
+    exit(1)
+
+start = time.time()
+for x in lines:
+    num  = int(x.strip())
+    factors = factorize(num)
+    if factors:
+        print(f"{num}={factors[0]}*{factors[1]}")
+
+    if time.time() - start > 5:
+        print("time exceed")
+        exit(1)
